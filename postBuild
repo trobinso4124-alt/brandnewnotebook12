@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+
+# Clone the POT provider
+git clone https://github.com/Brainicism/bgutil-ytdlp-pot-provider.git /tmp/pot-provider
+cd /tmp/pot-provider/server
+
+# Install and build
+npm install --production
+npm install typescript
+./node_modules/.bin/tsc
+
+# Start the provider server in the background
+nohup node build/main.js > /tmp/pot-provider.log 2>&1 &
+echo "POT provider started on port 4416"
